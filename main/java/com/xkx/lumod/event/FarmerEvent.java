@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -91,6 +92,12 @@ public class FarmerEvent {
     }
 
 
-
-
+    @SubscribeEvent
+    public static void rubbishThrow(ItemTossEvent event){ //乱扔垃圾检测
+        Player player = event.getPlayer();
+        Item item = event.getEntityItem().getItem().getItem();
+        String info = player.getName().getContents();
+        if(item == Items.WHEAT_SEEDS)
+            player.sendMessage(new TextComponent( info.toString() + ", don't throw waste!"), Util.NIL_UUID);
+    }
 }
